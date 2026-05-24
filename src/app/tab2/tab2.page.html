@@ -1,0 +1,82 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      Revisiones
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+
+  <app-explore-container
+    *ngIf="revisiones.length === 0"
+    icon="construct-outline"
+    title="Tu lista de revisiones está vacía"
+    description="Añade una nueva revisión pulsando el botón + abajo"
+  ></app-explore-container>
+
+  <div *ngIf="revisiones.length > 0">
+    <ion-card *ngFor="let revision of revisiones" color="light">
+      <ion-card-header>
+        <ion-card-title class="ion-flex ion-align-items-center">
+          {{ getVehiculoInfo(revision.vehiculoId)?.marca }} {{ getVehiculoInfo(revision.vehiculoId)?.modelo }}
+        </ion-card-title>
+        <ion-card-subtitle style="font-weight: bold">
+          Intervención: {{ revision.tipo }}
+        </ion-card-subtitle>
+      </ion-card-header>
+
+      <ion-card-content>
+        <p>Próxima revisión: <strong>{{ revision.fechaProxima | date: 'dd/MM/yyyy' }}</strong></p>
+        <p><strong>{{ revision.kilometrajeProximo | number }}</strong></p>
+      
+        <div class="ion-flex ion-justify-content-between ion-align-items-center ion-margin-top">
+          <ion-button fill="clear" size="small" class="ion-no-padding" (click)="verHistorial(revision.vehiculoId)">
+            Ver historial
+          </ion-button>
+        </div>
+      
+      </ion-card-content>
+
+    </ion-card>
+  </div>
+
+  <ion-fab slot="fixed" vertical="bottom" horizontal="end">
+    <ion-fab-button name="add" (click)="goToAddRevision()">
+      <ion-icon name="add-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+  <app-explore-container name="Revisiones"></app-explore-container>
+</ion-content>
+
+<ion-modal [isOpen]="isModalOpen" (didDismiss)="cerrarModal()">
+  <ng-template>
+    <ion-header>
+      <ion-toolbar color="light">
+        <ion-title>Historial del vehículo</ion-title>
+        <ion-buttons slot="end">
+          <ion-button (click)="cerrarModal()">Cerrar</ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content class="ion-padding">
+      <div class="ion-margin-bottom">
+        <h2 style="font-weight: bold, margin-bottom 0;">{{ vehiculoSeleccionado?.marca }} {{ vehiculoSeleccionado?.modelo }}</h2>
+        <p style="color: var(--ion-color-medium); margin-top: 4px;">Matrícula: {{ vehiculoSeleccionado?.matricula }} </p>
+      </div>
+
+      <ion-card *ngFor="let historial of historialRevisiones" color="light" style="margin-inline: 0; margin-bottom: 12px;">
+        <ion-card-header>
+          <ion-card-title style="font-size: 1.1rem;">{{ historial.tipo }}</ion-card-title>
+          <ion-card-subtitle>Realizada el: {{ historial.fechaActual | date: 'dd/MM/yyyy' }}</ion-card-subtitle>
+        </ion-card-header>
+        <ion-card-content>
+          <p>Kilometraje: <strong>{{ historial.kilometrajeActual | number }}</strong></p>
+          <p *ngIf="historial.coste">Coste: <strong>{{ historial.coste }} €</strong></p>
+          <p *ngIf="historial.notas" class="ion-margin-top" style="font-style: italic">"{{ historial.notas }}"</p>
+        </ion-card-content>
+      </ion-card>
+    </ion-content>
+  </ng-template>
+</ion-modal>

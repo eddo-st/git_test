@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">tfg-test</string>
+    <string name="title_activity_main">tfg-test</string>
+    <string name="package_name">tfg.test</string>
+    <string name="custom_url_scheme">tfg.test</string>
+</resources>

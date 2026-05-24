@@ -1,0 +1,92 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Añadir revisión</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Añadir revisión</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-list lines="inset">
+    <ion-item>
+      <ion-select label="Selecciona el vehículo *" 
+      labelPlacement="floating" 
+      [(ngModel)]="nuevaRevision.vehiculoId" 
+      placeholder="Seleccciona un vehículo">
+        <ion-select-option *ngFor="let vehiculo of listaVehiculos" [value]="vehiculo.id">
+          {{ vehiculo.marca }} {{ vehiculo.modelo }} {{ vehiculo.matricula }}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-input 
+        label="Tipo de revisión *"
+        labelPlacement="floating"
+        [(ngModel)]="nuevaRevision.tipo"
+        placeholder="Ej: Cambio de aceite, pre-ITV, etc."></ion-input>"
+    </ion-item>
+
+    <ion-item>
+      <ion-input 
+        label="Fecha actual *"
+        label-placement="floating"
+        type="date"
+        [(ngModel)]="nuevaRevision.fechaActual"></ion-input>"
+    </ion-item>
+
+    <ion-item>
+      <ion-input 
+        label="Fecha próxima"
+        label-placement="floating"
+        type="date"
+        [(ngModel)]="nuevaRevision.fechaProxima"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-input 
+        label="Kilometraje actual"
+        label-placement="floating"
+        type="number"
+        [(ngModel)]="nuevaRevision.kilometrajeActual"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-input 
+        label="Kilometraje próximo"
+        label-placement="floating"
+        type="number"
+        [(ngModel)]="nuevaRevision.kilometrajeProximo"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-input
+        label="Coste (opcional)"
+        label-placement="floating"
+        type="number"
+        [(ngModel)]="nuevaRevision.coste"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-input
+        label="Notas (opcional)"
+        label-placement="floating"
+        type="text"
+        [(ngModel)]="nuevaRevision.notas"></ion-input>
+    </ion-item>
+  
+  </ion-list>
+
+  <ion-button expand="block" color="primary" class="ion-margin-top" (click)="addRevision()">
+    Guardar
+  </ion-button>
+
+  <ion-button expand="block" color="primary" class="ion-margin-top" (click)="volverTab2()">
+    Volver
+  </ion-button>
+
+</ion-content>
